@@ -13,6 +13,8 @@ import { OpenAITtsProvider } from './openai.js';
 import { XTTSTtsProvider } from './xtts.js';
 import { AllTalkTtsProvider } from './alltalk.js';
 import { SpeechT5TtsProvider } from './speecht5.js';
+import { GPTSoVitsProvider } from './customtts.js';
+
 export { talkingAnimation };
 
 const UPDATE_INTERVAL = 1000;
@@ -79,6 +81,7 @@ const ttsProviders = {
     OpenAI: OpenAITtsProvider,
     AllTalk: AllTalkTtsProvider,
     SpeechT5: SpeechT5TtsProvider,
+    GPTSoVits: GPTSoVitsProvider,
 };
 let ttsProvider;
 let ttsProviderName;
@@ -481,10 +484,10 @@ async function processTtsQueue() {
         }
         const voice = await ttsProvider.getVoice(voiceMapEntry);
         const voiceId = voice.voice_id;
-        if (voiceId == null) {
-            toastr.error(`Specified voice for ${char} was not found. Check the TTS extension settings.`);
-            throw `Unable to attain voiceId for ${char}`;
-        }
+        // if (voiceId == null) {
+        //     toastr.error(`Specified voice for ${char} was not found. Check the TTS extension settings.`);
+        //     throw `Unable to attain voiceId for ${char}`;
+        // }
         await tts(text, voiceId, char);
     } catch (error) {
         toastr.error(error.toString());
